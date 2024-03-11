@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- use version 0.20.1 -->
+    <script
+      lang="javascript"
+      src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"
+    ></script>
+
+    <meta charset="UTF-8" />
+
+    <title>gs❤️</title>
+  </head>
+  <body>
+    <input type="file" name="xlfile" id="xlf" />
+    <div id="drop">Drop a spreadsheet file here to see sheet data</div>
+  </body>
+</html>
+
+<script>
+  async function handleFile(e) {
+    const file = e.target.files[0];
+    const data = await file.arrayBuffer();
+    /* data is an ArrayBuffer */
+    const workbook = XLSX.read(data);
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    const raw_data = XLSX.utils.sheet_to_json(worksheet);
+    raw_data.map((raw) => console.log(raw[4]));
+    /* DO SOMETHING WITH workbook HERE */
+  }
+  document.getElementById("xlf").addEventListener("change", handleFile, false);
+  async function handleDrop(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const file = e.dataTransfer.files[0];
+    const data = await file.arrayBuffer();
+    /* data is an ArrayBuffer */
+    const workbook = XLSX.read(data);
+    /* DO SOMETHING WITH workbook HERE */
+  }
+  document.getElementById("drop").addEventListener("drop", handleDrop, false);
+</script>
