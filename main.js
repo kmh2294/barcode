@@ -9,7 +9,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   win.loadFile("index.html");
 }
 
@@ -21,6 +21,8 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+  if (require("electron-squirrel-startup")) app.quit();
 });
 
 app.on("window-all-closed", () => {
